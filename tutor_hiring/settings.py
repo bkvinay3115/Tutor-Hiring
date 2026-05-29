@@ -111,7 +111,7 @@ STATICFILES_DIRS = [
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# WhiteNoise Storage
+# WhiteNoise static file storage
 
 STORAGES = {
     "staticfiles": {
@@ -123,7 +123,7 @@ STORAGES = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Login/Logout Redirects
+# Login / Logout Redirects
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
