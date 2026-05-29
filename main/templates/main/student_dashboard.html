@@ -1,0 +1,63 @@
+<!-- templates/main/student_dashboard.html -->
+{% extends 'base.html' %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                Menu
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="{% url 'student_dashboard' %}">Dashboard</a></li>
+                <li class="list-group-item"><a href="{% url 'update_student_profile' %}">Update Profile</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                My Profile
+            </div>
+            <div class="card-body">
+                <p><strong>Username:</strong> <i class="fas fa-user"></i> {{ student.user.username }}</p>
+                <p><strong>Email:</strong> <i class="fas fa-envelope"></i> {{ student.user.email }}</p>
+                <p><strong>Bio:</strong> <i class="fas fa-info-circle"></i> {{ student.bio }}</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                Hired Tutors
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Tutor</th>
+                            <th>Subjects</th>
+                            <th>Skills</th>
+                            <th>Availability</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for hire in hires %}
+                        <tr>
+                            <td>{{ hire.tutor.user.username }}</td>
+                            <td>{{ hire.tutor.subjects }}</td>
+                            <td>{{ hire.tutor.skills }}</td>
+                            <td>{{ hire.tutor.availability }}</td>
+                            <td>
+                                <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
