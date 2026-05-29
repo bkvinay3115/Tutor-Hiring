@@ -1,0 +1,54 @@
+<!-- templates/main/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center mb-4">Available Tutors</h1>
+    <form method="get" action="{% url 'home' %}" class="form-inline justify-content-center mb-4">
+        <input class="form-control mr-2" type="search" placeholder="Search by subject" name="search" value="{{ request.GET.search }}">
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+    <div class="row">
+        {% for tutor in tutors %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ tutor.user.username }}</h5>
+                    <p class="card-text"><strong>Subjects:</strong> {{ tutor.subjects }}</p>
+                    <p class="card-text"><strong>Skills:</strong> {{ tutor.skills }}</p>
+                    <p class="card-text"><strong>Availability:</strong> {{ tutor.availability }}</p>
+                </div>
+                <div class="card-footer text-center">
+                    {% if user.is_authenticated and user.is_student %}
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#hireTutorModal{{ tutor.id }}">Hire</button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Hire Tutor Modal -->
+        <div class="modal fade" id="hireTutorModal{{ tutor.id }}" tabindex="-1" role="dialog" aria-labelledby="hireTutorModalLabel{{ tutor.id }}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="hireTutorModalLabel{{ tutor.id }}">Hire {{ tutor.user.username }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure you want to hire {{ tutor.user.username }}?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <a href="{% url 'hire_tutor' tutor.id %}" class="btn btn-primary">Hire</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

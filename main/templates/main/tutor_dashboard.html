@@ -1,0 +1,61 @@
+<!-- templates/main/tutor_dashboard.html -->
+{% extends 'base.html' %}
+
+{% block title %}Tutor Dashboard{% endblock %}
+
+{% block content %}
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                Menu
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="{% url 'tutor_dashboard' %}">Dashboard</a></li>
+                <li class="list-group-item"><a href="{% url 'update_tutor_profile' %}">Update Profile</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card mb-4">
+            <div class="card-header bg-primary text-white">
+                My Profile
+            </div>
+            <div class="card-body">
+                <p><strong>Username:</strong> <i class="fas fa-user"></i> {{ tutor.user.username }}</p>
+                <p><strong>Email:</strong> <i class="fas fa-envelope"></i> {{ tutor.user.email }}</p>
+                <p><strong>Subjects:</strong> <i class="fas fa-book"></i> {{ tutor.subjects }}</p>
+                <p><strong>Skills:</strong> <i class="fas fa-cogs"></i> {{ tutor.skills }}</p>
+                <p><strong>Availability:</strong> <i class="fas fa-calendar-alt"></i> {{ tutor.availability }}</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                Students Hired Me
+            </div>
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for hire in hires %}
+                        <tr>
+                            <td>{{ hire.student.user.username }}</td>
+                            <td>{{ hire.student.user.email }}</td>
+                            <td>
+                                <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
